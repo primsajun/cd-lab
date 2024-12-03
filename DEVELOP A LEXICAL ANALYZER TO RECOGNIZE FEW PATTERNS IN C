@@ -1,0 +1,23 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+[bool|int|float|char|if|then|else|while]+   printf("Keyword\n");
+[-,+]+                                  printf("Operators\n");
+[0-9]+                                  printf("Numbers\n");
+[,.'"]+                                 printf("Punctuation Chars\n");
+[&,%,*,$,@,!]+                          printf("Special Characters\n");
+[a-zA-Z]+                               printf("Identifiers\n");
+%%
+
+int main()
+{
+    yylex();  // This function call processes the lexing
+    return 0; // Return statement to indicate successful execution
+}
+
+int yywrap()
+{
+    return 1; // This indicates that the input is completely processed
+}
