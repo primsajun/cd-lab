@@ -1,0 +1,53 @@
+LEX Program(Validarith.l)
+%{
+#include<stdio.h>
+#include "y.tab.h"
+%}
+%%
+[a-zA-Z]+ return VARIABLE;
+[0-9]+ return NUMBER;
+[\t] ;
+[\n] return 0;
+. return yytext[0];
+%%
+int yywrap()
+{
+return 1;
+}
+
+YACC Program (Validarith.y)
+%{
+#include<stdio.h>
+#include<conio.h>
+%}
+%token NUMBER
+%token VARIABLE
+%left '+' '-'
+%left '*' '/' '%'
+%left '(' ')'
+%%
+S: E {
+printf("\nEntered arithmetic expression is Valid\n\n");
+return 0;
+}
+E:E'+'E
+|E'-'E
+|E'*'E
+|E'/'E
+|E'%'E
+|'('E')'
+| NUMBER
+| VARIABLE
+;
+%%
+void main()
+{
+printf("\nEnter any Arithmetic Expression : \n");
+yyparse();
+getch();
+}
+int yyerror(void)
+
+{
+printf("\n Entered arithmetic expression is Invalid\n\n");
+}
